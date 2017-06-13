@@ -4,6 +4,15 @@
 #include "TankPlayerController.h"
 #include "Public/Tank.h"
 
+// Called every frame
+void ATankPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	// AimAtCrosshair();
+	UE_LOG(LogTemp, Warning, TEXT("PlayerController ticking"));
+}
+
+
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
