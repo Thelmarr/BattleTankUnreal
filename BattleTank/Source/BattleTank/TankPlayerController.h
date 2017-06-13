@@ -22,4 +22,7 @@ public:
 	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void AimAtCrosshair();
+
+	const bool GetSightRayHitLocation(FVector& location);
 };
