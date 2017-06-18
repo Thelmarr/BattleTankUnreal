@@ -24,6 +24,24 @@ void ATankAIController::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("AIController targeting at: %s"), *(PlayerTank->GetName()));
 }
 
+// Called every frame
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
+	// Get Player location
+
+	if (GetPlayerTank())
+	{
+		// TODO Move to player
+
+		// Aim towards player
+		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+
+		// Fire when ready
+	}
+}
+
 const ATank * ATankAIController::GetPlayerTank()
 {
 	APawn *Target = GetWorld()->GetFirstPlayerController()->GetPawn();
@@ -40,7 +58,7 @@ const ATank * ATankAIController::GetPlayerTank()
 	}
 };
 
-const ATank *ATankAIController::GetControlledTank()
+ ATank *ATankAIController::GetControlledTank()
 {
 	return Cast<ATank>(GetPawn());
 };
