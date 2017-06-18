@@ -28,7 +28,7 @@ void ATankPlayerController::BeginPlay()
 	}	
 };
 
-const ATank *ATankPlayerController::GetControlledTank() 
+ATank *ATankPlayerController::GetControlledTank() 
 {
 	return Cast<ATank>(GetPawn());
 };
@@ -40,7 +40,7 @@ void ATankPlayerController::AimAtCrosshair()
 
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit location: %s"), *HitLocation.ToString());
+		GetControlledTank()->AimAt(HitLocation);
 
 		// Get World Location through Crosshair
 		// It it hits something
