@@ -16,6 +16,8 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	void SetBarrelReference(UStaticMeshComponent *BarrelToSet);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -24,6 +26,9 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void AimAt(FVector WorldSpaceAim);
+	void AimAt(FVector WorldSpaceAim, float Speed);
+
+private:
+	UStaticMeshComponent *Barrel = nullptr;
 	
 };

@@ -31,5 +31,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void AimAt(FVector Location);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 	
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 100000.f;	// equals 1000 m/s
 };
