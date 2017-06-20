@@ -34,12 +34,13 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float Speed)
 													StartLocation, 
 													WorldSpaceAim, 
 													Speed,
+													0,
+													0,
+													0,
 													ESuggestProjVelocityTraceOption::DoNotTrace ))
 	{
 
 		auto AimDirection = OutVelocity.GetSafeNormal();
-		auto TankName = GetOwner()->GetName();
-		UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s"),*TankName ,*AimDirection.ToString());
 
 		MoveBarrel(AimDirection);
 
