@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
 
 
@@ -14,28 +15,11 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent *BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel *BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
 
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
-}
-
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
 
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float Speed)
 {
@@ -50,16 +34,31 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float Speed)
 													StartLocation, 
 													WorldSpaceAim, 
 													Speed,
-													false,
-													0,
-													0,
 													ESuggestProjVelocityTraceOption::DoNotTrace ))
 	{
 
 		auto AimDirection = OutVelocity.GetSafeNormal();
 		auto TankName = GetOwner()->GetName();
 		UE_LOG(LogTemp, Warning, TEXT("%s aiming at: %s"),*TankName ,*AimDirection.ToString());
+
+		MoveBarrel(AimDirection);
+
+			// Get socket location
+			// Rotate (azimuth and height)
+			
 		return;
 	}
 	else { return; }
+}
+
+void UTankAimingComponent::MoveBarrel(FVector Angle)
+{
+	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
+	auto AimAsRotator = Angle.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotation;
+
+	Barrel->Elevate(5);
+
+	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *AimAsRotator.ToString());
+	// TODO Move in desired direction at fixed speed per time (!)
 }
