@@ -48,7 +48,12 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float Speed)
 			
 		return;
 	}
-	else { return; }
+	else 
+	{ 
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: No aiming solution found!"), Time);
+		return;
+	}
 }
 
 void UTankAimingComponent::MoveBarrel(FVector Angle)
@@ -58,7 +63,5 @@ void UTankAimingComponent::MoveBarrel(FVector Angle)
 	auto DeltaRotator = AimAsRotator - BarrelRotation;
 
 	Barrel->Elevate(5);
-
-	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *AimAsRotator.ToString());
 	// TODO Move in desired direction at fixed speed per time (!)
 }
