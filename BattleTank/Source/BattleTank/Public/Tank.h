@@ -30,8 +30,6 @@ protected:
 
 public:	
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void AimAt(FVector Location);
 
@@ -43,12 +41,24 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Fire();
-	
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000.f;	// equals 1000 m/s
+
+private:
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
+	
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 100000.f;	// equals 1000 m/s
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float TimeToReloadinSeconds = 3;
+
+	double LastFireTime = 0;
 
 	UTankBarrel *Barrel = nullptr;
+
+
 };

@@ -45,14 +45,23 @@ void ATank::SetTurretReference(UTurret* TurretToSet)
 
 void ATank::Fire()
 {
-	if (!Barrel)
+	
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > TimeToReloadinSeconds;
+	
+	if (Barrel && isReloaded)
+	{
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("ProjectileStart")),
+			Barrel->GetSocketRotation(FName("ProjectileStart")));
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+
+		LastFireTime = FPlatformTime::Seconds();
+	}
+	else
 	{ 
-		UE_LOG(LogTemp, Warning, TEXT("Local Barrel refence does not exist!"));
 		return;
 	}
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
-		Barrel->GetSocketLocation(FName("ProjectileStart")),
-		Barrel->GetSocketRotation(FName("ProjectileStart")));
 
-	Projectile->LaunchProjectile(LaunchSpeed);
+
 }
