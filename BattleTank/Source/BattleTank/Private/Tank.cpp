@@ -2,7 +2,7 @@
 
 #include "BattleTank.h"
 #include "Tank.h"
-
+#include "TankBarrel.h"
 
 // Sets default values
 ATank::ATank()
@@ -35,6 +35,7 @@ void ATank::AimAt(FVector Location)
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	Barrel = BarrelToSet;
 }
 
 void ATank::SetTurretReference(UTurret* TurretToSet)
@@ -46,4 +47,13 @@ void ATank::Fire()
 {
 	auto TankName = GetName();
 	UE_LOG(LogTemp, Warning, TEXT("%s: Firing projectile!"), *TankName);
+
+	if (!Barrel)
+	{ 
+		UE_LOG(LogTemp, Warning, TEXT("Local Barrel refence does not exist!"));
+		return;
+	}
+	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
+		Barrel->GetSocketLocation(FName("ProjectileStart")),
+		Barrel->GetSocketRotation(FName("ProjectileStart")));
 }
