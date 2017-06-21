@@ -8,6 +8,7 @@
 #include "Tank.generated.h"
 
 class UTankBarrel;
+class UTurret;
 class UTankAimingComponent;
 
 UCLASS()
@@ -34,6 +35,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurretReference(UTurret *TurretToSet);
 	
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 100000.f;	// equals 1000 m/s

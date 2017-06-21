@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "TankBarrel.h"
+#include "Turret.h"
 #include "TankAimingComponent.h"
 
 
@@ -20,6 +21,10 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel *BarrelToSet)
 	Barrel = BarrelToSet;
 }
 
+void UTankAimingComponent::SetTurretReference(UTurret *TurretToSet)
+{
+	Turret = TurretToSet;
+}
 
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float Speed)
 {
@@ -43,6 +48,7 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float Speed)
 		auto AimDirection = OutVelocity.GetSafeNormal();
 
 		MoveBarrel(AimDirection);
+		MoveTurret(AimDirection);
 
 			// Get socket location
 			// Rotate (azimuth and height)
@@ -57,12 +63,21 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float Speed)
 	}
 }
 
-void UTankAimingComponent::MoveBarrel(FVector Angle)
+void UTankAimingComponent::MoveBarrel(FVector PitchAngle)
 {
 	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
-	auto AimAsRotator = Angle.Rotation();
+	auto AimAsRotator = PitchAngle.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotation;
 
-	Barrel->Elevate(5);
+	Barrel->Elevate(DeltaRotator.Pitch);
 	// TODO Move in desired direction at fixed speed per time (!)
+}
+
+void UTankAimingComponent::MoveTurret(FVector YawAngle)
+{
+	auto TurretRotation = Turret->GetForwardVector().Rotation();
+	auto AimAsRotator = YawAngle.Rotation();
+	auto DeltaRotator = AimAsRotator - TurretRotation;
+
+	Turret->Rotate(DeltaRotator.Yaw);
 }
