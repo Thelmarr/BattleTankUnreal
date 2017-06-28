@@ -3,6 +3,7 @@
 #pragma once
 
 #include "TankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "Projectile.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
@@ -11,6 +12,7 @@
 class UTankBarrel;
 class UTurret;
 class UTankAimingComponent;
+class UTankMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -28,6 +30,8 @@ protected:
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 public:	
 
 
