@@ -24,7 +24,7 @@ void ATankPlayerController::BeginPlay()
 	}	
 };
 
-ATank *ATankPlayerController::GetControlledTank() 
+ATank *ATankPlayerController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
 };
