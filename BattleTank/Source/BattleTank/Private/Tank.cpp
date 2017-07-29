@@ -11,10 +11,20 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay(); // Needed for BP Begin Play to run!
+	
+	auto TankName = GetName();
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+}
+
+
 void ATank::AimAt(FVector Location)
 {
 	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(Location, LaunchSpeed);
+	UE_LOG(LogTemp, Warning, TEXT("I'm here!"));
 };
 
 void ATank::Fire()

@@ -71,7 +71,7 @@ void UTankAimingComponent::MoveBarrel(FVector PitchAngle)
 
 void UTankAimingComponent::MoveTurret(FVector YawAngle)
 {
-	if (!ensure(Barrel && Turret)) { return; }
+	if (!ensure(Barrel) && ensure(Turret)) { return; }
 	auto TurretRotation = Turret->GetForwardVector().Rotation();
 	auto AimAsRotator = YawAngle.Rotation();
 	auto DeltaRotator = AimAsRotator - TurretRotation;

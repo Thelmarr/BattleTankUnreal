@@ -12,7 +12,6 @@
 class UTankBarrel;
 class UTurret;
 class UTankAimingComponent;
-class UTankMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -28,8 +27,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
-	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
 public:		
 	void AimAt(FVector Location);
 
@@ -37,9 +34,12 @@ public:
 	void Fire();
 
 private:
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 	
+	// TODO remove once firing is moved
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 100000.f;	// equals 1000 m/s
 
