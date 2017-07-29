@@ -31,12 +31,7 @@ void ATankPlayerController::AimAtCrosshair()
 	if (GetSightRayHitLocation(HitLocation))
 	{
 		AimingComponent->AimAt(HitLocation);
-
-		// Get World Location through Crosshair
-		// It it hits something
-			// Tell controlled tank to aim at it
 	}
-
 }
 
 const bool ATankPlayerController::GetSightRayHitLocation(FVector& location)
