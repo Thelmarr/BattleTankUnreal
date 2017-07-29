@@ -24,7 +24,6 @@ void ATank::AimAt(FVector Location)
 {
 	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(Location, LaunchSpeed);
-	UE_LOG(LogTemp, Warning, TEXT("I'm here!"));
 };
 
 void ATank::Fire()
