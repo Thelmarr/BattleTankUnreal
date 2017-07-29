@@ -32,6 +32,8 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	void BeginPlay() override;
+
 	void AimAt(FVector WorldSpaceAim);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
@@ -57,7 +59,9 @@ private:
 	void MoveBarrel(FVector PitchAngle);
 	void MoveTurret(FVector YawAngle);
 
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Aiming;
+	EFiringState FiringState = EFiringState::Reloading;
 };
