@@ -3,15 +3,12 @@
 #pragma once
 
 #include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
-#include "Projectile.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h"
 
 class UTankBarrel;
 class UTurret;
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
@@ -23,13 +20,7 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
-protected:
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
-
 public:		
-	void AimAt(FVector Location);
-
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 

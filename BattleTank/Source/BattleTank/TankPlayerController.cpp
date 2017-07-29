@@ -3,7 +3,6 @@
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
 #include "TankPlayerController.h"
-#include "Public/Tank.h"
 
 // Called every frame
 void ATankPlayerController::Tick(float DeltaTime)
@@ -18,28 +17,20 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	
 	if (!ensure(AimingComponent)) { return; }
 	FoundAimingComponent(AimingComponent);
 };
 
-ATank *ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-};
-
 void ATankPlayerController::AimAtCrosshair()
 {
-	if (!GetControlledTank()) 
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("!GetControlledTank()"));
-		return;
-	}
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
+
 	FVector HitLocation;	// OUT Parameter
 
 	if (GetSightRayHitLocation(HitLocation))
 	{
-		GetControlledTank()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 
 		// Get World Location through Crosshair
 		// It it hits something
@@ -47,8 +38,6 @@ void ATankPlayerController::AimAtCrosshair()
 	}
 
 }
-
-
 
 const bool ATankPlayerController::GetSightRayHitLocation(FVector& location)
 {
