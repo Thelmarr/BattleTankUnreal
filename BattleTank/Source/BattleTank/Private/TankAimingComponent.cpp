@@ -27,12 +27,28 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	if ((FPlatformTime::Seconds() - LastFireTime) > TimeToReloadinSeconds)
+	if ((FPlatformTime::Seconds() - LastFireTime) < TimeToReloadinSeconds)
 	{
 		FiringState = EFiringState::Reloading;
 	}
+	else if (IsBarrelMoving())
+	{
+		FiringState = EFiringState::Aiming;
+	}
+	else
+	{
+		FiringState = EFiringState::Locked;
+	}
 }
 
+
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) { return false; }
+	FVector BarrelVector = Barrel->GetForwardVector().GetSafeNormal();
+	return !BarrelVector.Equals(AimingVector, AimTolerance);
+
+}
 void UTankAimingComponent::Initialise(UTankBarrel *BarrelToSet, UTurret *TurretToSet)
 {
 	Barrel = BarrelToSet;
@@ -59,10 +75,11 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim)
 	{
 
 		auto AimDirection = OutVelocity.GetSafeNormal();
+		AimingVector = AimDirection;
 
 		MoveBarrel(AimDirection);
 		MoveTurret(AimDirection);
-
+		
 			// Get socket location
 			// Rotate (azimuth and height)
 			

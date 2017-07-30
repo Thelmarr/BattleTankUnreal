@@ -53,6 +53,8 @@ public:
 	float TimeToReloadinSeconds = 3;
 
 	double LastFireTime = 0;
+
+	bool IsBarrelMoving();
 private:
 	UTankBarrel *Barrel = nullptr;
 	UTurret *Turret = nullptr;
@@ -61,6 +63,10 @@ private:
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
+	FVector AimingVector;
+
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	float AimTolerance = 0.05;
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
