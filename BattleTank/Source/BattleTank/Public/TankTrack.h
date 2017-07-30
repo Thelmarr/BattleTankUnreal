@@ -18,9 +18,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Input")
 	void SetThrottle(float Throttle);
 
-
 	// Max Force in Newton per Track 
 	// current mass of Tank: 40000 kg; Acceleration: 5 m/s²
 	UPROPERTY(EditDefaultsOnly)
 	float MaxDrivingForce = 400000.f;
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+private:
+	UTankTrack();
 };

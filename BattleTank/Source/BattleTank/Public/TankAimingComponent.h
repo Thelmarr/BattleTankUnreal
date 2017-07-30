@@ -66,7 +66,7 @@ private:
 	FVector AimingVector;
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
-	float AimTolerance = 0.05;
+	float AimTolerance = 0.075;
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
