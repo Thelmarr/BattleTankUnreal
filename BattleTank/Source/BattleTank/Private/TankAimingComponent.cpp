@@ -110,7 +110,14 @@ void UTankAimingComponent::MoveTurret(FVector YawAngle)
 	auto AimAsRotator = YawAngle.Rotation();
 	auto DeltaRotator = AimAsRotator - TurretRotation;
 
-	Turret->Rotate(DeltaRotator.Yaw);
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
+	{
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
 }
 
 void UTankAimingComponent::Fire()
