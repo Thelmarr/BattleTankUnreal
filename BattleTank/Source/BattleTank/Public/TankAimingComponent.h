@@ -55,6 +55,8 @@ public:
 	double LastFireTime = 0;
 
 	bool IsBarrelMoving();
+
+	EFiringState GetFiringState() const;
 private:
 	UTankBarrel *Barrel = nullptr;
 	UTurret *Turret = nullptr;
