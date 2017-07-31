@@ -13,7 +13,8 @@ enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	NoAmmo
 };
 
 
@@ -57,6 +58,9 @@ public:
 	bool IsBarrelMoving();
 
 	EFiringState GetFiringState() const;
+
+	UFUNCTION(BlueprintCallable)
+	int GetAmmo() const;
 private:
 	UTankBarrel *Barrel = nullptr;
 	UTurret *Turret = nullptr;
@@ -69,6 +73,8 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float AimTolerance = 0.075;
+
+	int AmmoShells = 3;
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;

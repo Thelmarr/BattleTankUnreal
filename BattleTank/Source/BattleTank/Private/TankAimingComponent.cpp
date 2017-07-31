@@ -27,7 +27,11 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	if ((FPlatformTime::Seconds() - LastFireTime) < TimeToReloadinSeconds)
+	if (AmmoShells <= 0)
+	{
+		FiringState = EFiringState::NoAmmo;
+	}
+	else if ((FPlatformTime::Seconds() - LastFireTime) < TimeToReloadinSeconds)
 	{
 		FiringState = EFiringState::Reloading;
 	}
@@ -35,7 +39,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	{
 		FiringState = EFiringState::Aiming;
 	}
-	else
+		else
 	{
 		FiringState = EFiringState::Locked;
 	}
@@ -122,9 +126,9 @@ void UTankAimingComponent::MoveTurret(FVector YawAngle)
 
 void UTankAimingComponent::Fire()
 {
-	// bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > TimeToReloadinSeconds;
 
-	if (FiringState != EFiringState::Reloading)
+
+	if (FiringState == EFiringState::Aiming || FiringState == EFiringState::Locked)
 	{
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) { return; }
@@ -135,6 +139,7 @@ void UTankAimingComponent::Fire()
 		Projectile->LaunchProjectile(LaunchSpeed);
 
 		LastFireTime = FPlatformTime::Seconds();
+		AmmoShells--;
 	}
 	else
 	{
@@ -145,4 +150,9 @@ void UTankAimingComponent::Fire()
 EFiringState UTankAimingComponent::GetFiringState() const
 {
 	return FiringState;
+}
+
+int UTankAimingComponent::GetAmmo() const
+{
+	return AmmoShells;
 }
