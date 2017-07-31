@@ -120,7 +120,7 @@ void UTankAimingComponent::MoveTurret(FVector YawAngle)
 	}
 	else
 	{
-		Turret->Rotate(DeltaRotator.Yaw);
+		Turret->Rotate(-DeltaRotator.Yaw);
 	}
 }
 
