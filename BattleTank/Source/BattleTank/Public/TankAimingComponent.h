@@ -60,7 +60,7 @@ public:
 	EFiringState GetFiringState() const;
 
 	UFUNCTION(BlueprintCallable)
-	int GetAmmo() const;
+	int32 GetAmmo() const;
 private:
 	UTankBarrel *Barrel = nullptr;
 	UTurret *Turret = nullptr;
@@ -74,7 +74,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float AimTolerance = 0.075;
 
-	int AmmoShells = 3;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 AmmoShells = 3;
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
