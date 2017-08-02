@@ -33,7 +33,13 @@ public:
 	const bool GetLookdirection(FVector2D ScreenLocation, FVector &Direction);
 	const bool GetLookVectorHitLocation(FVector LookVector, FVector &TargetLocation);
 
+	UFUNCTION()
+	void OnPlayerTankDeath();
+
 private:
+
+	void SetPawn(APawn *InPawn);
+
 	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5;
 
