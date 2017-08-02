@@ -16,10 +16,11 @@ public:
 	AProjectile();
 
 	void LaunchProjectile(float Speed);
-protected:
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
 	UProjectileMovementComponent *ProjectileMovementComponent = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
@@ -31,8 +32,15 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UParticleSystemComponent *ImpactBlast = nullptr;
 
-private:
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	URadialForceComponent *ExplosionForce = nullptr;
+
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent *HitComponent, AActor *OtherActor, UPrimitiveComponent *OtherComponent, FVector NormalImpulse, const FHitResult &Hit);
+
+	void OnTimerExpire();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float DestroyDelay = 10;
 	
 };
