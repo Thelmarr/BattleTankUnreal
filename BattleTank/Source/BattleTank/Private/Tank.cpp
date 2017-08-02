@@ -14,3 +14,20 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for BP Begin Play to run!
 }
+
+float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController *EventInstigator, AActor *DamageCauser)
+{
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	int32 AppliedDamage = FMath::Clamp(DamagePoints, 0, CurrentHealth);
+
+	CurrentHealth -= AppliedDamage;
+
+	UE_LOG(LogTemp, Warning, TEXT("Damage amount: %f, Applied damage: %i"), DamageAmount, AppliedDamage);
+
+	if (CurrentHealth <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Tank died!"));
+	}
+
+	return AppliedDamage;
+}
