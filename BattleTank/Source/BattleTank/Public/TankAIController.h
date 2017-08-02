@@ -19,12 +19,19 @@ class BATTLETANK_API ATankAIController : public AAIController
 	
 public:
 
+	UFUNCTION()
+	void OnTankDeath();
+
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	float AcceptanceRadius = 8000;
+
+private:
+
 	void BeginPlay() override;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	
-protected:
-	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-	float AcceptanceRadius = 8000;
+
+	virtual void SetPawn(APawn *InPawn) override;
 };
