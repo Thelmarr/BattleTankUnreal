@@ -41,7 +41,7 @@ void ATankAIController::Tick(float DeltaTime)
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 	auto ControlledTank = GetPawn();
 
-	if (!ensure(PlayerTank && ControlledTank)) { return; }
+	if (!ensure(PlayerTank && ControlledTank)) { return; }	// TODO ensure fires on Tank Death
 	
 	// TODO Move to player
 	MoveToActor(PlayerTank, AcceptanceRadius);
